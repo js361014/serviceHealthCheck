@@ -19,6 +19,7 @@ import service.health.check.models.HibernateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.io.IOException;
@@ -58,22 +59,37 @@ public class App {
 				});
 		logger.info("Updater - Message received: " + messageJson);
 		EntityManager entityManager = HibernateUtil.getEntityManagerFactory()
-				.createEntityManager();
+												   .createEntityManager();
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaUpdate<service.health.check.models.Address> update = cb.createCriteriaUpdate(
-				service.health.check.models.Address.class);
-		Root<service.health.check.models.Address> root = update.from(
-				service.health.check.models.Address.class);
-		update.set(root.get(service.health.check.models.Address_.healthy),
-				checkedAddress.getHealthy());
-		update.where(cb.equal(root.get(service.health.check.models.Address_.host),
-				checkedAddress.getHost()),
-				cb.equal(root.get(service.health.check.models.Address_.port),
-						checkedAddress.getPort()));
-		entityManager.getTransaction().begin();
-		entityManager.createQuery(update).executeUpdate();
-		entityManager.getTransaction().commit();
+		if (!checkedAddress.getHealthy()) {
+			// todo: unhealthy
+			CriteriaQuery<service.health.check.models.Address> select = cb.createQuery(service.health.check.models.Address.class);
+			Root<service.health.check.models.Address> root = select.from(
+					service.health.check.models.Address.class);
+			select.select()
+			select.where(cb.equal(root.get(service.health.check.models.Address_.host),
+								  checkedAddress.getHost()),
+						 cb.equal(root.get(service.health.check.models.Address_.port),
+								  checkedAddress.getPort()));
+			entityManager.getTransaction().begin();
+			entityManager.createQuery(select).executeUpdate();
+			entityManager.getTransaction().commit();
+		} else {
+			CriteriaUpdate<service.health.check.models.Address> update = cb.createCriteriaUpdate(
+					service.health.check.models.Address.class);
+			Root<service.health.check.models.Address> root = update.from(
+					service.health.check.models.Address.class);
+			// todo: healthy
+			update.set(root.get(service.health.check.models.Address_.healthy),
+					   checkedAddress.getHealthy());
+			update.where(cb.equal(root.get(service.health.check.models.Address_.host),
+								  checkedAddress.getHost()),
+						 cb.equal(root.get(service.health.check.models.Address_.port),
+								  checkedAddress.getPort()));
+			entityManager.getTransaction().begin();
+			entityManager.createQuery(update).executeUpdate();
+			entityManager.getTransaction().commit();
+		}
 		logger.info("Updater - Work done! " + messageJson);
 	}
-
 }

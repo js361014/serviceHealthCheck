@@ -1,6 +1,8 @@
 package service.health.check.models;
 
-import org.hibernate.annotations.Type;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name="addresses")
@@ -28,9 +28,8 @@ public class Address implements Serializable {
 	@Column(name = "port", length = 256, nullable = false)
 	private String port;
 
-	@Type(type= "org.hibernate.type.BooleanType")
-	@Column(name = "healthy", nullable = false)
-	private Boolean healthy;
+	@Column(name = "last_healthy")
+	private Timestamp lastHealthy;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -73,11 +72,11 @@ public class Address implements Serializable {
 		this.port = port;
 	}
 
-	public Boolean getHealthy() {
-		return healthy;
+	public Timestamp getLastHealthy() {
+		return lastHealthy;
 	}
 
-	public void setHealthy(Boolean healthy) {
-		this.healthy = healthy;
+	public void setLastHealthy(Timestamp lastHealthy) {
+		this.lastHealthy = lastHealthy;
 	}
 }
