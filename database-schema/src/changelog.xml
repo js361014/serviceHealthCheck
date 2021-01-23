@@ -38,4 +38,29 @@
 			</column>
 		</createTable>
 	</changeSet>
+	<changeSet id="4" author="Hoxmot">
+		<dropColumn columnName="healthy"
+					tableName="addresses"/>
+		<addColumn tableName="addresses">
+			<column name="first_admin" type="varchar(256)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="second_admin" type="varchar(256)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="send_notification_after" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="resend_notification_after" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="last_healthy"
+					type="timestamp"/>
+			<column name="notification_sent"
+					type="timestamp"/>
+			<column name="second_notification_sent" type="boolean">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+	</changeSet>
 </databaseChangeLog>

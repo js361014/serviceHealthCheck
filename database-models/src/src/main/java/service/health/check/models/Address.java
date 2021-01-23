@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="addresses")
 public class Address implements Serializable {
@@ -28,8 +30,27 @@ public class Address implements Serializable {
 	@Column(name = "port", length = 256, nullable = false)
 	private String port;
 
+	@Column(name = "first_admin", length = 256, nullable = false)
+	private String firstAdmin;
+
+	@Column(name = "second_admin", length = 256, nullable = false)
+	private String secondAdmin;
+
+	@Column(name = "send_notification_after", nullable = false)
+	private Integer sendNotificationAfter;
+
+	@Column(name = "resend_notification_after", nullable = false)
+	private Integer resendNotificationAfter;
+
 	@Column(name = "last_healthy")
 	private Timestamp lastHealthy;
+
+	@Column(name = "notification_sent")
+	private Timestamp notificationSent;
+
+	@Type(type= "org.hibernate.type.BooleanType")
+	@Column(name = "second_notification_sent")
+	private Boolean secondNotificationSent;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -78,5 +99,53 @@ public class Address implements Serializable {
 
 	public void setLastHealthy(Timestamp lastHealthy) {
 		this.lastHealthy = lastHealthy;
+	}
+
+	public Integer getSendNotificationAfter() {
+		return sendNotificationAfter;
+	}
+
+	public void setSendNotificationAfter(Integer timeToSend) {
+		this.sendNotificationAfter = timeToSend;
+	}
+
+	public String getFirstAdmin() {
+		return firstAdmin;
+	}
+
+	public void setFirstAdmin(String firstAdmin) {
+		this.firstAdmin = firstAdmin;
+	}
+
+	public String getSecondAdmin() {
+		return secondAdmin;
+	}
+
+	public void setSecondAdmin(String secondAdmin) {
+		this.secondAdmin = secondAdmin;
+	}
+
+	public Integer getResendNotificationAfter() {
+		return resendNotificationAfter;
+	}
+
+	public void setResendNotificationAfter(Integer resendNotificationAfter) {
+		this.resendNotificationAfter = resendNotificationAfter;
+	}
+
+	public Timestamp getNotificationSent() {
+		return notificationSent;
+	}
+
+	public void setNotificationSent(Timestamp notificationSent) {
+		this.notificationSent = notificationSent;
+	}
+
+	public Boolean getSecondNotificationSent() {
+		return secondNotificationSent;
+	}
+
+	public void setSecondNotificationSent(Boolean secondNotificationSent) {
+		this.secondNotificationSent = secondNotificationSent;
 	}
 }
