@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: database-schema
+spec:
+  template:
+    metadata:
+      name: database-schema
+    spec:
+      containers:
+        - name: database-schema
+          image: gcr.io/PROJECT_NAME/database-schema
+          command: ["/app/start.sh"]
+          imagePullPolicy: Always
+      restartPolicy: Never
