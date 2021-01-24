@@ -6,8 +6,14 @@ services:
       dockerfile: ./Dockerfile
       context: ./
     command: /app/start.sh
+    depends_on:
+        - "mail"
+  mail:
+    image: bytemark/smtp
+    restart: always
 
 networks:
   default:
     external:
       name: healthcheck-network
+

@@ -17,16 +17,35 @@ import service.health.check.messages.CheckedAddress;
 import service.health.check.messages.Config;
 import service.health.check.models.HibernateUtil;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeoutException;
+
+import java.util.Properties;
+
+import javax.mail.Session;
 
 public class App {
 
 	public App() {
+	}
+
+	private static void sendEmail() throws UnsupportedEncodingException, MessagingException {
+		String smtpHostServer = "mail";
+		String email = "reszrlfz@sharklasers.com";
+
+		Properties props = System.getProperties();
+
+		props.put("mail.smtp.host", smtpHostServer);
+
+		Session session = Session.getInstance(props, null);
+
+		EmailUtil.sendEmail(session, email,"Testing Subject", "Testing Body");
 	}
 
 	public static void main(String[] args)
