@@ -22,7 +22,7 @@ public class CheckedAddressHandler {
     private static final String EMAIL_SUBJECT = "System %s:%s is dead";
     private static final String EMAIL_BODY = "Your system %s:%s is dead. Check what's going on and mark "
             + "that you're responding to the issue at %s?id=%d";
-    private static final String FRONT_LINK = System.getProperty("front.link.confirm", "http://localhost:8090/");
+    private static final String FRONT_LINK = System.getProperty("front.link.confirm", "http://localhost:8090/duty-confirm");
 
     // dependencies
     private final AddressManager addressManager;
