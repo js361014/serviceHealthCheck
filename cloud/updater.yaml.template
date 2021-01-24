@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: updater
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: updater
+  template:
+    metadata:
+      labels:
+        app: updater
+    spec:
+      containers:
+          - name: updater
+            image: gcr.io/PROJECT_NAME/updater
+            command: ["/app/start.sh"]
+            imagePullPolicy: Always
+          - name: mail
+            image: bytemark/smtp
+            restart: always

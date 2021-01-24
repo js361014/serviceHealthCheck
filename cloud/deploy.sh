@@ -14,3 +14,4 @@ sleep 10s
 kubectl apply -f worker.yaml
 kubectl apply -f server.yaml
 kubectl apply -f front.yaml
+kubectl apply -f updater.yaml
