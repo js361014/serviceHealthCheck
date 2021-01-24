@@ -13,7 +13,7 @@ spec:
         app: front
     spec:
       containers:
-          - name: worker
+          - name: front
             image: gcr.io/PROJECT_NAME/front
             command: ["/app/start.sh"]
             imagePullPolicy: Always

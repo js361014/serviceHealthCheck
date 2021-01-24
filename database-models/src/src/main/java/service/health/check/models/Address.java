@@ -1,6 +1,8 @@
 package service.health.check.models;
 
-import org.hibernate.annotations.Type;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Objects;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="addresses")
@@ -28,9 +30,26 @@ public class Address implements Serializable {
 	@Column(name = "port", length = 256, nullable = false)
 	private String port;
 
-	@Type(type= "org.hibernate.type.BooleanType")
-	@Column(name = "healthy", nullable = false)
-	private Boolean healthy;
+	@Column(name = "first_admin", length = 256, nullable = false)
+	private String firstAdmin;
+
+	@Column(name = "second_admin", length = 256, nullable = false)
+	private String secondAdmin;
+
+	@Column(name = "send_notification_after", nullable = false)
+	private Integer sendNotificationAfter;
+
+	@Column(name = "resend_notification_after", nullable = false)
+	private Integer resendNotificationAfter;
+
+	@Column(name = "last_healthy")
+	private Timestamp lastHealthy;
+
+	@Column(name = "notification_sent")
+	private Timestamp notificationSent;
+
+	@Column(name = "second_notification_sent")
+	private Timestamp secondNotificationSent;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -73,11 +92,59 @@ public class Address implements Serializable {
 		this.port = port;
 	}
 
-	public Boolean getHealthy() {
-		return healthy;
+	public Timestamp getLastHealthy() {
+		return lastHealthy;
 	}
 
-	public void setHealthy(Boolean healthy) {
-		this.healthy = healthy;
+	public void setLastHealthy(Timestamp lastHealthy) {
+		this.lastHealthy = lastHealthy;
+	}
+
+	public Integer getSendNotificationAfter() {
+		return sendNotificationAfter;
+	}
+
+	public void setSendNotificationAfter(Integer timeToSend) {
+		this.sendNotificationAfter = timeToSend;
+	}
+
+	public String getFirstAdmin() {
+		return firstAdmin;
+	}
+
+	public void setFirstAdmin(String firstAdmin) {
+		this.firstAdmin = firstAdmin;
+	}
+
+	public String getSecondAdmin() {
+		return secondAdmin;
+	}
+
+	public void setSecondAdmin(String secondAdmin) {
+		this.secondAdmin = secondAdmin;
+	}
+
+	public Integer getResendNotificationAfter() {
+		return resendNotificationAfter;
+	}
+
+	public void setResendNotificationAfter(Integer resendNotificationAfter) {
+		this.resendNotificationAfter = resendNotificationAfter;
+	}
+
+	public Timestamp getNotificationSent() {
+		return notificationSent;
+	}
+
+	public void setNotificationSent(Timestamp notificationSent) {
+		this.notificationSent = notificationSent;
+	}
+
+	public Timestamp getSecondNotificationSent() {
+		return secondNotificationSent;
+	}
+
+	public void setSecondNotificationSent(Timestamp secondNotificationSent) {
+		this.secondNotificationSent = secondNotificationSent;
 	}
 }
