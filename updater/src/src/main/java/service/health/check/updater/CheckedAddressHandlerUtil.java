@@ -29,8 +29,8 @@ public class CheckedAddressHandlerUtil {
             return false;
         }
         long lastHealthyMillisecondsAgo = now.getTime() - address.getLastHealthy().getTime();
-        log.info("{}:{} last healthy for {}ms ago. First email sent? - {}", address.getHost(), address.getPort(),
-                 lastHealthyMillisecondsAgo, formatTimestamp(address.getNotificationSent()));
+        log.info("Updater - {}:{} last healthy for {}ms ago. First email sent? - {}", address.getHost(),
+                 address.getPort(), lastHealthyMillisecondsAgo, formatTimestamp(address.getNotificationSent()));
         return address.getNotificationSent() == null &&
                 lastHealthyMillisecondsAgo > SECONDS_TO_MILLIS * address.getSendNotificationAfter();
     }
@@ -49,7 +49,7 @@ public class CheckedAddressHandlerUtil {
             return false;
         }
         long emailToFirstAdminSentMillisecondsAgo = now.getTime() - address.getNotificationSent().getTime();
-        log.info("{}:{} email sent to first admin {}ms ago. Second email sent? - {}", address.getHost(),
+        log.info("Updater - {}:{} email sent to first admin {}ms ago. Second email sent? - {}", address.getHost(),
                  address.getPort(), emailToFirstAdminSentMillisecondsAgo,
                  formatTimestamp(address.getSecondNotificationSent()));
         return address.getSecondNotificationSent() == null &&
