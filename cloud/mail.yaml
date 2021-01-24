@@ -16,7 +16,6 @@ spec:
         - name: mail
           image: bytemark/smtp
           imagePullPolicy: Always
-          restartPolicy: always
           ports:
             - containerPort: 25
 
