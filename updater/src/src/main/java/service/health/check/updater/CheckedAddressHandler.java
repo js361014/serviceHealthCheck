@@ -20,6 +20,14 @@ public class CheckedAddressHandler {
 
     private Timestamp now;
 
+    /**
+     * Handle checked address (target) depending on whether it's healthy or not.
+     * <p>
+     * Healthy targets are marked as healthy in the database
+     * and to admins of the unhealthy targets emails are sent if necessary.
+     *
+     * @param checkedAddress target that has been checked
+     */
     public void handle(CheckedAddress checkedAddress) {
         now = TimeMachine.nowTimestamp();
         if (checkedAddress.getHealthy()) {
@@ -59,6 +67,6 @@ public class CheckedAddressHandler {
                  checkedAddress.getHost(),
                  checkedAddress.getPort());
         // todo: sendmail
-        addressManager.recordSendSecondEmailByHostPort(checkedAddress.getHost(), checkedAddress.getPort());
+        addressManager.recordSendSecondEmailByHostPort(now, checkedAddress.getHost(), checkedAddress.getPort());
     }
 }

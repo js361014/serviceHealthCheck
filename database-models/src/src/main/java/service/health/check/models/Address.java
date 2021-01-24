@@ -48,9 +48,8 @@ public class Address implements Serializable {
 	@Column(name = "notification_sent")
 	private Timestamp notificationSent;
 
-	@Type(type= "org.hibernate.type.BooleanType")
 	@Column(name = "second_notification_sent")
-	private Boolean secondNotificationSent;
+	private Timestamp secondNotificationSent;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -141,11 +140,11 @@ public class Address implements Serializable {
 		this.notificationSent = notificationSent;
 	}
 
-	public Boolean getSecondNotificationSent() {
+	public Timestamp getSecondNotificationSent() {
 		return secondNotificationSent;
 	}
 
-	public void setSecondNotificationSent(Boolean secondNotificationSent) {
+	public void setSecondNotificationSent(Timestamp secondNotificationSent) {
 		this.secondNotificationSent = secondNotificationSent;
 	}
 }

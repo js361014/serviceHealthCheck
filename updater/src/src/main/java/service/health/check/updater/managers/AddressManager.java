@@ -8,6 +8,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Session;
+
 import lombok.RequiredArgsConstructor;
 import service.health.check.models.Address;
 import service.health.check.models.Address_;
@@ -25,7 +27,10 @@ public class AddressManager {
         select.select(root);
         select.where(cb.equal(root.get(Address_.host), host),
                      cb.equal(root.get(Address_.port), port));
-        return entityManager.createQuery(select).getSingleResult();
+        Address address = entityManager.createQuery(select).getSingleResult();
+        Session session = (Session) entityManager.getDelegate();
+        session.refresh(address);
+        return address;
     }
 
     public void updateAddressHealthyByHostPort(Timestamp lastHealthy, String host, String port) {
@@ -45,7 +50,7 @@ public class AddressManager {
         CriteriaUpdate<Address> update = cb.createCriteriaUpdate(Address.class);
         Root<Address> root = update.from(Address.class);
         update.set(root.get(Address_.notificationSent), emailSent);
-        update.set(root.get(Address_.secondNotificationSent), false);
+        update.set(root.get(Address_.secondNotificationSent), (Timestamp) null);
         update.where(cb.equal(root.get(Address_.host), host),
                      cb.equal(root.get(Address_.port), port));
         entityManager.getTransaction().begin();
@@ -53,11 +58,11 @@ public class AddressManager {
         entityManager.getTransaction().commit();
     }
 
-    public void recordSendSecondEmailByHostPort(String host, String port) {
+    public void recordSendSecondEmailByHostPort(Timestamp emailSent, String host, String port) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaUpdate<Address> update = cb.createCriteriaUpdate(Address.class);
         Root<Address> root = update.from(Address.class);
-        update.set(root.get(Address_.secondNotificationSent), true);
+        update.set(root.get(Address_.secondNotificationSent), emailSent);
         update.where(cb.equal(root.get(Address_.host), host),
                      cb.equal(root.get(Address_.port), port));
         entityManager.getTransaction().begin();

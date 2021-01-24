@@ -58,9 +58,7 @@
 					type="timestamp"/>
 			<column name="notification_sent"
 					type="timestamp"/>
-			<column name="second_notification_sent" type="boolean">
-				<constraints nullable="false"/>
-			</column>
+			<column name="second_notification_sent" type="timestamp"/>
 		</addColumn>
 	</changeSet>
 </databaseChangeLog>
