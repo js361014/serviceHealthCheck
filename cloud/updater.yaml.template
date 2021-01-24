@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: updater
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: updater
@@ -17,6 +17,3 @@ spec:
             image: gcr.io/PROJECT_NAME/updater
             command: ["/app/start.sh"]
             imagePullPolicy: Always
-          - name: mail
-            image: bytemark/smtp
-            restart: always
