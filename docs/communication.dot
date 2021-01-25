@@ -1,0 +1,26 @@
+digraph {
+	labelloc="t";
+    label="Communication schema";
+    front  [label="Front"];
+	worker [label="Worker"];
+    updater  [label="Updater"];
+    server  [label="Server"];
+    messageBroker  [label="Message broker"];
+    database  [label="Database"];
+    client  [label="Client\nE.g. curl"];
+    mailSend  [label="Mail send service"];
+    admin  [label="Admin"];
+    
+    database -> server [label=" Fetch addresses"];
+    messageBroker -> worker [label=" Fetch address to check"];
+    server -> messageBroker [label=" Put on queue addresses to check"]
+    worker -> messageBroker [label=" Put on queue checked address"]
+    messageBroker -> updater [label=" Fetch checked address"]
+    updater -> database [label=" Update address info"]
+    front -> database [label=" Initialize config default values"]
+    front -> updater [label=" Fetch config values"]
+    client -> front [label=" Add new address"]
+    updater -> mailSend [label=" Request sending mail to admin"]
+    admin -> front [label=" Click a link to front API"]
+    mailSend -> admin [label=" Send an email to admin"]
+}
