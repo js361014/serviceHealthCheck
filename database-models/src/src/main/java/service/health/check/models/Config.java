@@ -23,9 +23,7 @@ public class Config implements Serializable {
 		/** Worker socket timeout in milliseconds */
 		WORKER_SOCKET_TIMEOUT,
 		/** Worker connection request timeout in milliseconds */
-		WORKER_CONNECTION_REQUEST_TIMEOUT,
-		/** Maximum time in seconds after which server is considered as inactive */
-		SERVER_MAX_INACTIVE_TIME
+		WORKER_CONNECTION_REQUEST_TIMEOUT
 	}
 
 	public static final Map<ConfigName, String> defaultConfigsValues;
@@ -35,7 +33,6 @@ public class Config implements Serializable {
 		defaultConfigsValues.put(ConfigName.WORKER_CONNECTION_TIMEOUT, "1000");
 		defaultConfigsValues.put(ConfigName.WORKER_SOCKET_TIMEOUT, "1000");
 		defaultConfigsValues.put(ConfigName.WORKER_CONNECTION_REQUEST_TIMEOUT, "1000");
-		defaultConfigsValues.put(ConfigName.SERVER_MAX_INACTIVE_TIME, "10");
 	}
 
 	@Id
