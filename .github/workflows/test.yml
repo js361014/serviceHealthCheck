@@ -41,6 +41,11 @@ jobs:
             cd front
             docker-compose up -d
             cd ..
+      - name: Run front tests
+        run: |
+            cd front
+            docker-compose run "front" mvn test
+            cd ..      
       - name: Set up updater
         run: |
             cd updater
