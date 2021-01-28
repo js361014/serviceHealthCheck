@@ -1,15 +1,15 @@
 package service.health.check.models;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name="addresses")
@@ -22,21 +22,27 @@ public class Address implements Serializable {
 	@Column(name="ID", unique = true, nullable = false)
 	private Integer id;
 
+	@NotNull
 	@Column(name = "host", length = 256, nullable = false)
 	private String host;
 
+	@NotNull
 	@Column(name = "port", length = 256, nullable = false)
 	private String port;
 
+	@NotNull
 	@Column(name = "first_admin", length = 256, nullable = false)
 	private String firstAdmin;
 
+	@NotNull
 	@Column(name = "second_admin", length = 256, nullable = false)
 	private String secondAdmin;
 
+	@NotNull
 	@Column(name = "send_notification_after", nullable = false)
 	private Integer sendNotificationAfter;
 
+	@NotNull
 	@Column(name = "resend_notification_after", nullable = false)
 	private Integer resendNotificationAfter;
 
